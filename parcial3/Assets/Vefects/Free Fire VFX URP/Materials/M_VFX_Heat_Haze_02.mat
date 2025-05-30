@@ -8,7 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_VFX_Heat_Haze_02
-  m_Shader: {fileID: 4800000, guid: 681f0afa76f7b9e4d93e6fd3c2ead6f8, type: 3}
+  m_Shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 0
@@ -20,6 +22,7 @@ Material:
   disabledShaderPasses:
   - DistortionVectors
   - TransparentBackface
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -33,6 +36,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Distortion_Texture:
         m_Texture: {fileID: 2800000, guid: 6e4cc1d1e3dc174458edd8746bbeb29e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask_Tex:
@@ -89,6 +96,7 @@ Material:
     - _Emissive_Amount: 10
     - _EnableFogOnTransparent: 1
     - _ExtraNoiseLerp: 1
+    - _InvFade: 1
     - _Mask_Boost: 1
     - _Normals_Intensity: 0.1
     - _Opacity_Boost: 1
@@ -96,6 +104,7 @@ Material:
     - _Opacity_DepthFade_Intensity: 0.4
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RenderQueueType: 4
@@ -136,4 +145,5 @@ Material:
     - _Normals_Scale: {r: 5, g: 5, b: 0, a: 0}
     - _Normals_Speed: {r: 0, g: 0, b: 0, a: 0}
     - _TextureChannel: {r: 0, g: 1, b: 0, a: 0}
+    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []
