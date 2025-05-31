@@ -12,11 +12,14 @@ EditorBuildSettings:
     path: Assets/Scenes/TallerTercerCorte.unity
     guid: e669715fc8c2c3c42ae224faed364523
   - enabled: 1
-    path: Assets/Menu/Menu.unity
+    path: Assets/Scenes/Menu.unity
     guid: 6cd0ac190b424f144b3b855ecf880750
   - enabled: 1
-    path: Assets/Extintor/Extintor.unity
+    path: Assets/Scenes/Extintor.unity
     guid: 148942137f8e15e45840faa9ee32d43d
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: e3d797185cf83954a9aacc767924a250
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: d255e08c65f2c064383dfe41dd06652e, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: efa2eb8cc37b24642a24eee16742440c, type: 2}

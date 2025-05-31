@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 7772028110492940986}
   - component: {fileID: 430416132941240660}
   m_Layer: 0
-  m_Name: Fuego
+  m_Name: Fuego - Copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
