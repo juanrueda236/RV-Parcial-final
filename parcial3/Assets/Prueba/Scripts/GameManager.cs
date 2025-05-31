@@ -1,57 +1,165 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro; // Importa la librer铆a de TextMeshPro
+
 public class GameManager : MonoBehaviour
 {
     public float dummys;
-    public Text cronometroText; // Referencia al texto en el Canvas
-  
+    public TextMeshProUGUI cronometroText; // Referencia al texto en el Canvas
+    public TextMeshProUGUI dummysText; // Referencia al texto que muestra los dummys
+    public TextMeshProUGUI resultadoText; // Referencia al texto que muestra el mensaje de aprobaci贸n o reprobaci贸n
+    public string sceneName; // Nombre de la escena a la que se cambiar谩
+    public string sceneName2;
+
     public float contadorTiempo = 0f; // Contador de tiempo
-    private bool cronometroActivo = true; // Estado del cron髆etro
+    private bool cronometroActivo = true; // Estado del cron贸metro
+
+    public static GameManager instancia; // Singleton
+
+    void Awake()
+    {
+        // Asegura que solo haya un GameManager y no se destruya entre escenas
+        if (instancia == null)
+        {
+            instancia = this;
+            DontDestroyOnLoad(gameObject); // No destruye este objeto al cargar una nueva escena
+        }
+        else
+        {
+            Destroy(gameObject); // Destruye el duplicado si ya hay uno
+        }
+    }
+
     void Update()
     {
-        // C骴igo que se ejecuta en cada frame
-        if(dummys > 6)
-        {
-
-        }
         if (cronometroActivo)
         {
             // Incrementa el tiempo
             contadorTiempo += Time.deltaTime;
 
-            // Actualiza el texto del cron髆etro
-            cronometroText.text = "Tiempo: " + contadorTiempo.ToString("F2");
+            // Convierte el tiempo a minutos y segundos
+            int minutos = Mathf.FloorToInt(contadorTiempo / 60);
+            int segundos = Mathf.FloorToInt(contadorTiempo % 60);
 
-            // Verifica si el tiempo alcanza el l韒ite
-            if (dummys > 6)
+            // Actualiza el texto del cron贸metro con formato mm:ss
+            if (cronometroText != null)
+                cronometroText.text = string.Format("Tiempo: {0:00}:{1:00}", minutos, segundos);
+
+            // Actualiza el texto de dummys
+            if (dummysText != null)
+                dummysText.text = "Dummys: " + dummys;
+
+            // Verifica si el tiempo alcanza el l铆mite de 6 minutos
+            if (minutos >= 6 && dummys > 5)
             {
                 PausarCronometro();
+                MostrarResultado(false);
+                ChangeScene2();
+            }
+            else if (dummys > 5)
+            {
+                PausarCronometro();
+                ChangeScene();
+                MostrarResultado(true);
             }
         }
     }
+
     public void PausarCronometro()
     {
         cronometroActivo = false;
-        Debug.Log("Cron髆etro pausado");
+        Debug.Log("Cron贸metro pausado");
     }
 
     public void ReiniciarCronometro()
     {
         contadorTiempo = 0f;
         cronometroActivo = true;
-        Debug.Log("Cron髆etro reiniciado");
+        Debug.Log("Cron贸metro reiniciado");
     }
+
     public void sumarDummys()
     {
         dummys += 1;
-        Debug.Log("entro un dummy" );
+        Debug.Log("Entro un dummy");
     }
+
     public void RestarDummys()
     {
         dummys -= 1;
-        Debug.Log("Salio un dummy");
+        Debug.Log("Sali贸 un dummy");
     }
-    
+
+    public void ChangeScene()
+    {
+        if (!string.IsNullOrEmpty(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+            StartCoroutine(SetupUIInNewScene());
+            Debug.Log("Cambiando a la escena: " + sceneName);
+        }
+        else
+        {
+            Debug.LogWarning("El nombre de la escena no est谩 asignado.");
+        }
+    }
+
+    public void ChangeScene2()
+    {
+        if (!string.IsNullOrEmpty(sceneName2))
+        {
+            SceneManager.LoadScene(sceneName2);
+            StartCoroutine(SetupUIInNewScene());
+            Debug.Log("Cambiando a la escena: " + sceneName2);
+        }
+        else
+        {
+            Debug.LogWarning("El nombre de la escena no est谩 asignado.");
+        }
+    }
+
+    public void MostrarResultado(bool aprobado)
+    {
+        if (resultadoText != null)
+        {
+            if (aprobado)
+            {
+                resultadoText.text = "隆Aprobaste!";
+                resultadoText.color = Color.green;
+            }
+            else
+            {
+                resultadoText.text = "Reprobaste. Te pasaste de 6 minutos.";
+                resultadoText.color = Color.red;
+            }
+
+            resultadoText.gameObject.SetActive(true);
+        }
+    }
+
+    private IEnumerator SetupUIInNewScene()
+    {
+        yield return null; // Espera un frame para asegurarte de que la escena haya cargado
+
+        // Busca los textos en la nueva escena
+        cronometroText = GameObject.Find("CronometroText")?.GetComponent<TextMeshProUGUI>();
+        dummysText = GameObject.Find("DummysText")?.GetComponent<TextMeshProUGUI>();
+        resultadoText = GameObject.Find("ResultadoText")?.GetComponent<TextMeshProUGUI>();
+
+        // Actualiza los textos con los valores actuales
+        if (cronometroText != null)
+        {
+            int minutos = Mathf.FloorToInt(contadorTiempo / 60);
+            int segundos = Mathf.FloorToInt(contadorTiempo % 60);
+            cronometroText.text = string.Format("Tiempo: {0:00}:{1:00}", minutos, segundos);
+        }
+
+        if (dummysText != null)
+            dummysText.text = "Dummys: " + dummys;
+
+        if (resultadoText != null)
+            resultadoText.gameObject.SetActive(false); // Oculta el texto de resultado inicialmente
+    }
 }

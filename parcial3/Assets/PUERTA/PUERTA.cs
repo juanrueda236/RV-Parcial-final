@@ -5,31 +5,32 @@ using UnityEngine;
 public class PUERTA : MonoBehaviour
 {
     Rigidbody rb;
-    GameObject OBj;
+
+   
+ 
     
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        
+        
     }
 
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("MAR"))
+        if (other.gameObject.CompareTag("Hacha"))
         {
             rb.isKinematic = false;
-            timeforDeath();
-            Destroy(OBj );
             
+            Destroy(gameObject, 6f);
+
+
 
         }
 
 
     }
-      public IEnumerator timeforDeath()
-    {
-        yield return new WaitForSeconds(2f);
-        
-    }
+
 }
