@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TallerTercerCorte.unity
     guid: e669715fc8c2c3c42ae224faed364523
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Menu/Menu.unity
     guid: 6cd0ac190b424f144b3b855ecf880750
   - enabled: 1
     path: Assets/Extintor/Extintor.unity
